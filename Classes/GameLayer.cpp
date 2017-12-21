@@ -81,7 +81,7 @@ void GameLayer::onEnter(){
         printf("%d",EventKeyboard::KeyCode::KEY_SPACE);
         switch (keyCode) {
             case EventKeyboard::KeyCode::KEY_SPACE:
-                target->setInitialSpeed(20);
+                target->setInitialSpeed(Hero::hitSpeed);
                 break;
             case EventKeyboard::KeyCode::KEY_UP_ARROW:
                 target->setPosition(Vec2(pos.x,pos.y+20));

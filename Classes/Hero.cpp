@@ -10,8 +10,12 @@
 
 USING_NS_CC;
 
+float Hero::gravitySpeed = -0.098;
+int Hero::hitSpeed = 5;
+
 Hero* Hero::create(const std::string &filename){
     Hero* hero = new Hero();
+    
     if(hero && hero->initWithFile(filename)){
         hero->autorelease();
         return hero;
@@ -20,23 +24,15 @@ Hero* Hero::create(const std::string &filename){
     return nullptr;
 }
 
-bool Hero::init(){
-    
-    if(!Sprite::init()){
-        return false;
-    }
-    
-    gravitySpeed = 9.8;
-    speed = 0;
-    initialSpeed = 0;
-    
-    return true;
-};
-
 void Hero::keepMove(){
+    // spCount++;
+    // if(spCount == 10){
+    //     spCount = 0;
+    //     initialSpeed = 0;
+    // }
     auto posY = this->getPositionY();
     initialSpeed += gravitySpeed;
-    speed += initialSpeed;
+    speed = initialSpeed;
     this->setPositionY(posY + speed);
 };
 

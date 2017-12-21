@@ -13,13 +13,15 @@ class Hero : public cocos2d::Sprite {
     
 private:
     
-    float initialSpeed;
-    float gravitySpeed;
-    float speed;
+    float initialSpeed = 0;
+    float speed = 0;
+    int spCount = 0;
     
 public:
-    virtual bool init();
     
+    static float gravitySpeed;
+    static int hitSpeed;
+
     static Hero* create(const std::string &filename);
     
     void keepMove();
