@@ -33,6 +33,8 @@
 		4ECA29251FE67D740023872A /* bar2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4ECA29141FE676190023872A /* bar2.png */; };
 		4ECA29261FE67D780023872A /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 4ECA291A1FE6761A0023872A /* bg.png */; };
 		4ED21F061FE7EB8800FAE33C /* Hero.png in Resources */ = {isa = PBXBuildFile; fileRef = 4ECA29211FE679E70023872A /* Hero.png */; };
+		4EDA25551FEA8A4A00985443 /* Hero.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EDA25541FEA8A4A00985443 /* Hero.cpp */; };
+		4EDA25561FEA8A4A00985443 /* Hero.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EDA25541FEA8A4A00985443 /* Hero.cpp */; };
 		4EDDE98F1FE6A56600C250F3 /* GameLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EDDE98E1FE6A56600C250F3 /* GameLayer.cpp */; };
 		4EDDE9901FE6A56600C250F3 /* GameLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EDDE98E1FE6A56600C250F3 /* GameLayer.cpp */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
@@ -141,6 +143,8 @@
 		4ECA291A1FE6761A0023872A /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		4ECA29211FE679E70023872A /* Hero.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Hero.png; sourceTree = "<group>"; };
 		4ECA292A1FE69A690023872A /* GameLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameLayer.h; sourceTree = "<group>"; };
+		4EDA25541FEA8A4A00985443 /* Hero.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Hero.cpp; sourceTree = "<group>"; };
+		4EDA25581FEA8A6100985443 /* Hero.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hero.h; sourceTree = "<group>"; };
 		4EDDE98E1FE6A56600C250F3 /* GameLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameLayer.cpp; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -335,6 +339,8 @@
 				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
 				4ECA292A1FE69A690023872A /* GameLayer.h */,
 				4EDDE98E1FE6A56600C250F3 /* GameLayer.cpp */,
+				4EDA25541FEA8A4A00985443 /* Hero.cpp */,
+				4EDA25581FEA8A6100985443 /* Hero.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -546,6 +552,7 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				4EDA25551FEA8A4A00985443 /* Hero.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				4EDDE98F1FE6A56600C250F3 /* GameLayer.cpp in Sources */,
@@ -560,6 +567,7 @@
 				4EDDE9901FE6A56600C250F3 /* GameLayer.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				4EDA25561FEA8A4A00985443 /* Hero.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

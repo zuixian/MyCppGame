@@ -7,6 +7,7 @@
 
 #include "GameLayer.h"
 #include "SimpleAudioEngine.h"
+#include "Hero.h"
 
 USING_NS_CC;
 
@@ -52,13 +53,15 @@ bool GameLayer::init(){
     this->addChild(bg);
     
     // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("Hero.png");
+    auto sprite = Hero::create("Hero.png");
     
     // position the sprite on the center of the screen
     sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     
     // add the sprite as a child to this layer
     this->addChild(sprite, 0, 0);
+    
+    this->schedule(schedule_selector(GameLayer::heroMove));
     
     return true;
 }
@@ -72,13 +75,13 @@ void GameLayer::onEnter(){
     auto hero = getChildByTag(0);
     
     listener->onKeyReleased = [](EventKeyboard::KeyCode keyCode,Event* event){
-        auto target = static_cast<Sprite *>(event->getCurrentTarget());
+        auto target = static_cast<Hero *>(event->getCurrentTarget());
         auto pos = target->getPosition();
         printf("Key with keycode %d released\n",keyCode);
         printf("%d",EventKeyboard::KeyCode::KEY_SPACE);
         switch (keyCode) {
             case EventKeyboard::KeyCode::KEY_SPACE:
-                
+                target->setInitialSpeed(20);
                 break;
             case EventKeyboard::KeyCode::KEY_UP_ARROW:
                 target->setPosition(Vec2(pos.x,pos.y+20));
@@ -103,8 +106,9 @@ void GameLayer::onEnter(){
     eventDispatcher->addEventListenerWithSceneGraphPriority(listener, hero);
 }
 
-void heroMove(cocos2d::Sprite *sprite){
-    
+void GameLayer::heroMove(float dt){
+    auto hero = dynamic_cast<Hero*>(this->getChildByTag(0));
+    hero->keepMove();
 }
 
 void GameLayer::onExit(){
