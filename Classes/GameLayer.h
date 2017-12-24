@@ -11,9 +11,14 @@
 #define GameLayer_h
 
 class GameLayer : public cocos2d::Layer {
+
+private:
+    float bgSpeed;
     
 public:
-    
+
+    static int sprameCount;
+
     virtual bool init();
     
     // a selector callback

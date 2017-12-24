@@ -11,6 +11,8 @@
 
 USING_NS_CC;
 
+int GameLayer::sprameCount = 240;
+
 bool GameLayer::init(){
     
     //初始化父类
@@ -20,6 +22,10 @@ bool GameLayer::init(){
     
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+    printf("visibleSize--->%d,%d\n",visibleSize.width,visibleSize.height);
+    printf("origin---->%d,%d\n",origin.x,origin.y);
+
     
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -49,9 +55,18 @@ bool GameLayer::init(){
     //添加背景图片
     auto bg = Sprite::create("bg.png");
     bg->setContentSize(visibleSize);
-    bg->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-    this->addChild(bg);
-    
+    bg->setAnchorPoint(Vec2(0,0.5));
+    bg->setPosition(Vec2(0, visibleSize.height/2 + origin.y));
+    this->addChild(bg, 0, 1);
+
+    auto bg1 = Sprite::create("bg.png");
+    bg1->setContentSize(visibleSize);
+    bg1->setAnchorPoint(Vec2(0,0.5));
+    bg1->setPosition(Vec2(visibleSize.width + origin.x, visibleSize.height/2 + origin.y));
+    this->addChild(bg1, 0, 2);
+
+    bgSpeed = (visibleSize.width + origin.x)/sprameCount;
+
     // add "HelloWorld" splash screen"
     auto sprite = Hero::create("Hero.png");
     
@@ -77,27 +92,21 @@ void GameLayer::onEnter(){
     listener->onKeyReleased = [](EventKeyboard::KeyCode keyCode,Event* event){
         auto target = static_cast<Hero *>(event->getCurrentTarget());
         auto pos = target->getPosition();
-        printf("Key with keycode %d released\n",keyCode);
-        printf("%d",EventKeyboard::KeyCode::KEY_SPACE);
         switch (keyCode) {
             case EventKeyboard::KeyCode::KEY_SPACE:
                 target->setInitialSpeed(Hero::hitSpeed);
                 break;
             case EventKeyboard::KeyCode::KEY_UP_ARROW:
                 target->setPosition(Vec2(pos.x,pos.y+20));
-                printf("pos %f,%f\n",pos.x,pos.y);
                 break;
             case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
                 target->setPosition(Vec2(pos.x,pos.y-20));
-                printf("pos %f,%f\n",pos.x,pos.y);
                 break;
             case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
                 target->setPosition(Vec2(pos.x-20,pos.y));
-                printf("pos %f,%f\n",pos.x,pos.y);
                 break;
             case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
                 target->setPosition(Vec2(pos.x+20,pos.y));
-                printf("pos %f,%f\n",pos.x,pos.y);
                 break;
         }
     };
@@ -107,8 +116,26 @@ void GameLayer::onEnter(){
 }
 
 void GameLayer::heroMove(float dt){
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
     auto hero = dynamic_cast<Hero*>(this->getChildByTag(0));
     hero->keepMove();
+
+
+    auto bg = this->getChildByTag(1);
+    auto bg1 = this->getChildByTag(2);
+
+    if(bg->getPositionX() <= -visibleSize.width - origin.x){
+        bg->setPositionX(visibleSize.width + origin.x);
+    }
+    if(bg1->getPositionX() <= -visibleSize.width - origin.x){
+        bg1->setPositionX(visibleSize.width + origin.x);
+    }
+
+    bg->setPositionX(bg->getPositionX() - bgSpeed);
+    bg1->setPositionX(bg1->getPositionX() - bgSpeed);
+    
 }
 
 void GameLayer::onExit(){
