@@ -25,11 +25,6 @@ Hero* Hero::create(const std::string &filename){
 }
 
 void Hero::keepMove(){
-    // spCount++;
-    // if(spCount == 10){
-    //     spCount = 0;
-    //     initialSpeed = 0;
-    // }
     auto posY = this->getPositionY();
     initialSpeed += gravitySpeed;
     speed = initialSpeed;

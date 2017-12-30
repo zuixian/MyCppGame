@@ -77,6 +77,7 @@ bool GameLayer::init(){
     this->addChild(sprite, 0, 0);
     
     this->schedule(schedule_selector(GameLayer::heroMove));
+    this->schedule(schedule_selector(GameLayer::checkOver));
     
     return true;
 }
@@ -115,13 +116,18 @@ void GameLayer::onEnter(){
     eventDispatcher->addEventListenerWithSceneGraphPriority(listener, hero);
 }
 
+void GameLayer::onExit(){
+    Layer::onExit();
+    printf("GameLyer onExit");
+    Director::getInstance()->getEventDispatcher()->removeAllEventListeners();
+}
+
 void GameLayer::heroMove(float dt){
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     auto hero = dynamic_cast<Hero*>(this->getChildByTag(0));
     hero->keepMove();
-
 
     auto bg = this->getChildByTag(1);
     auto bg1 = this->getChildByTag(2);
@@ -135,14 +141,18 @@ void GameLayer::heroMove(float dt){
 
     bg->setPositionX(bg->getPositionX() - bgSpeed);
     bg1->setPositionX(bg1->getPositionX() - bgSpeed);
-    
 }
 
-void GameLayer::onExit(){
-    Layer::onExit();
-    printf("GameLyer onExit");
-    
-    Director::getInstance()->getEventDispatcher()->removeAllEventListeners();
+void GameLayer::checkOver(float dt){
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+    auto hero = dynamic_cast<Hero*>(this->getChildByTag(0));
+
+    //如果英雄触底，则游戏结束。
+    if(hero->getPositionY() <= (visibleSize.height + origin.y)/7){
+        this->unschedule(schedule_selector(GameLayer::heroMove));
+    }
 }
 
 void GameLayer::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event){
@@ -162,5 +172,4 @@ void GameLayer::menuCloseCallback(Ref* pSender)
     
     //EventCustom customEndEvent("game_scene_close_event");
     //_eventDispatcher->dispatchEvent(&customEndEvent);
-    
 }

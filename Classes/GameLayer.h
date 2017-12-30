@@ -29,6 +29,7 @@ public:
     virtual void onExit();
     
     void heroMove(float dt);
+    void checkOver(float dt);
     
     CREATE_FUNC(GameLayer);
 };
