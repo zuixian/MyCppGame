@@ -6,7 +6,6 @@
 //
 
 #include "Hero.h"
-#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 

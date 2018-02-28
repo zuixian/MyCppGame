@@ -6,8 +6,8 @@
 //
 
 #include "GameLayer.h"
-#include "SimpleAudioEngine.h"
 #include "Hero.h"
+#include "WallSprite.h"
 
 USING_NS_CC;
 
@@ -27,11 +27,6 @@ bool GameLayer::init(){
     printf("origin---->%d,%d\n",origin.x,origin.y);
 
     
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
-    
-    // add a "close" icon to exit the progress. it's an autorelease object
     auto closeItem = MenuItemImage::create(
                                            "CloseNormal.png",
                                            "CloseSelected.png",
@@ -45,12 +40,6 @@ bool GameLayer::init(){
     auto menu = Menu::create(closeItem, NULL);
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
-    
-    /////////////////////////////
-    // 3. add your codes below...
-    
-    // add a label shows "Hello World"
-    // create and initialize a label
     
     //添加背景图片
     auto bg = Sprite::create("bg.png");
@@ -67,13 +56,16 @@ bool GameLayer::init(){
 
     bgSpeed = (visibleSize.width + origin.x)/sprameCount;
 
-    // add "HelloWorld" splash screen"
+    //创建墙体
+    auto wall = Wall::create();
+    wall->initWall(visibleSize.height/2);
+    this->addChild(wall);
+    
+    //创建人物
     auto sprite = Hero::create("Hero.png");
     
-    // position the sprite on the center of the screen
     sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     
-    // add the sprite as a child to this layer
     this->addChild(sprite, 0, 0);
     
     this->schedule(schedule_selector(GameLayer::heroMove));

@@ -25,6 +25,8 @@
 		46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */; };
 		46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */; };
+		4E0E49852046C7BC00CC8D91 /* WallSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E0E49842046C7BC00CC8D91 /* WallSprite.cpp */; };
+		4E0E49862046C7BC00CC8D91 /* WallSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E0E49842046C7BC00CC8D91 /* WallSprite.cpp */; };
 		4ECA291B1FE6761A0023872A /* bar2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4ECA29141FE676190023872A /* bar2.png */; };
 		4ECA291D1FE6761A0023872A /* bar1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4ECA29191FE6761A0023872A /* bar1.png */; };
 		4ECA291E1FE6761A0023872A /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 4ECA291A1FE6761A0023872A /* bg.png */; };
@@ -138,6 +140,8 @@
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
 		46880B8719C43A87006E1F66 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
+		4E0E49842046C7BC00CC8D91 /* WallSprite.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WallSprite.cpp; sourceTree = "<group>"; };
+		4E0E49882046C7D900CC8D91 /* WallSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WallSprite.h; sourceTree = "<group>"; };
 		4ECA29141FE676190023872A /* bar2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar2.png; sourceTree = "<group>"; };
 		4ECA29191FE6761A0023872A /* bar1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar1.png; sourceTree = "<group>"; };
 		4ECA291A1FE6761A0023872A /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
@@ -341,6 +345,8 @@
 				4EDDE98E1FE6A56600C250F3 /* GameLayer.cpp */,
 				4EDA25541FEA8A4A00985443 /* Hero.cpp */,
 				4EDA25581FEA8A6100985443 /* Hero.h */,
+				4E0E49842046C7BC00CC8D91 /* WallSprite.cpp */,
+				4E0E49882046C7D900CC8D91 /* WallSprite.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -555,6 +561,7 @@
 				4EDA25551FEA8A4A00985443 /* Hero.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
+				4E0E49852046C7BC00CC8D91 /* WallSprite.cpp in Sources */,
 				4EDDE98F1FE6A56600C250F3 /* GameLayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -567,6 +574,7 @@
 				4EDDE9901FE6A56600C250F3 /* GameLayer.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				4E0E49862046C7BC00CC8D91 /* WallSprite.cpp in Sources */,
 				4EDA25561FEA8A4A00985443 /* Hero.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
