@@ -12,13 +12,13 @@ class Wall : public cocos2d::Sprite{
 
 private:
 
-    Sprite* cloneWall(Sprite* wall,float posX,float posY);
+    Sprite* cloneWall(Sprite* wall,float posY,int direction);
 
 public:
 
     static float scale;
 
-    void initWall(float position);
+    void initWall();
 
     CREATE_FUNC(Wall);
 };

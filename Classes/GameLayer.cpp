@@ -23,8 +23,8 @@ bool GameLayer::init(){
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    printf("visibleSize--->%d,%d\n",visibleSize.width,visibleSize.height);
-    printf("origin---->%d,%d\n",origin.x,origin.y);
+    printf("visibleSize--->%f,%f\n",visibleSize.width,visibleSize.height);
+    printf("origin---->%f,%f\n",origin.x,origin.y);
 
     
     auto closeItem = MenuItemImage::create(
@@ -58,8 +58,19 @@ bool GameLayer::init(){
 
     //创建墙体
     auto wall = Wall::create();
-    wall->initWall(visibleSize.height/2);
+    wall->initWall();
+    wall->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(wall);
+
+    // auto testSprite = Sprite::create("bar1.png");
+    // testSprite->setAnchorPoint(Vec2(0.5,1));
+    // testSprite->setScale(0.2);
+    // testSprite->setPosition(Vec2(visibleSize.width/2,visibleSize.height/2));
+    // testSprite->setAnchorPoint(Vec2(0.5,0));
+    // this->addChild(testSprite);
+    
+
+    // printf("墙体节点的坐标---X：：%f---Y：：%f\n",wall->getPositionX(),wall->getPositionY());
     
     //创建人物
     auto sprite = Hero::create("Hero.png");
