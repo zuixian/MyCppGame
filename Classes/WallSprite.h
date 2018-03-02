@@ -18,7 +18,12 @@ public:
 
     static float scale;
 
-    void initWall();
+    //Y轴相对于中点的偏移量
+    void initWall(float offset);
+
+    void setWallPositionX(float x);
+
+    void deleteWall();
 
     CREATE_FUNC(Wall);
 };

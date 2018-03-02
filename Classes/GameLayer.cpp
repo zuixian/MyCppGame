@@ -56,11 +56,7 @@ bool GameLayer::init(){
 
     bgSpeed = (visibleSize.width + origin.x)/sprameCount;
 
-    //创建墙体
-    auto wall = Wall::create();
-    wall->initWall();
-    wall->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-    this->addChild(wall);
+    
 
     // auto testSprite = Sprite::create("bar1.png");
     // testSprite->setAnchorPoint(Vec2(0.5,1));
@@ -80,6 +76,7 @@ bool GameLayer::init(){
     this->addChild(sprite, 0, 0);
     
     this->schedule(schedule_selector(GameLayer::heroMove));
+    this->schedule(schedule_selector(GameLayer::wallMove));
     this->schedule(schedule_selector(GameLayer::checkOver));
     
     return true;
@@ -126,6 +123,7 @@ void GameLayer::onExit(){
 }
 
 void GameLayer::heroMove(float dt){
+    //TODO 将这两个变量变成全局变量
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -144,6 +142,14 @@ void GameLayer::heroMove(float dt){
 
     bg->setPositionX(bg->getPositionX() - bgSpeed);
     bg1->setPositionX(bg1->getPositionX() - bgSpeed);
+}
+
+void GameLayer::wallMove(float dt){
+    //创建墙体
+    // auto wall = Wall::create();
+    // wall->initWall(100);
+    // wall->setWallPositionX(visibleSize.width/2 + origin.x);
+    // this->addChild(wall);
 }
 
 void GameLayer::checkOver(float dt){
@@ -170,9 +176,4 @@ void GameLayer::menuCloseCallback(Ref* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
-    
-    /*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() and exit(0) as given above,instead trigger a custom event created in RootViewController.mm as below*/
-    
-    //EventCustom customEndEvent("game_scene_close_event");
-    //_eventDispatcher->dispatchEvent(&customEndEvent);
 }
