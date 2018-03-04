@@ -9,9 +9,11 @@
 
 USING_NS_CC;
 
-float Wall::scale = 0.2;
+float Wall::lastOffset = 0;
 
-void Wall::initWall(float offset){
+void Wall::initWall(){
+
+    float offset = Wall::getRandomOffset();
 
     Size size = Director::getInstance()->getWinSize();  
 
@@ -24,6 +26,7 @@ void Wall::initWall(float offset){
     Size headSize = wallHead->getContentSize();
     Size bodySize = wallBody->getContentSize();
 
+    this->wallWidth = headSize.width;
 
     Sprite *tempWallBody = NULL;
     Sprite *tempWallHead = NULL;
@@ -37,34 +40,34 @@ void Wall::initWall(float offset){
     float tempPos = 100.0;
     wallHead->setPositionY(tempPos);
     //翻转图片
-    wallHead->setScale(scale,-scale);
+    wallHead->setScale(WALL_SCALE,-WALL_SCALE);
     this->addChild(wallHead);
-    printf("上部分的第一个：：%f",tempPos);
+    // printf("上部分的第一个：：%f",tempPos);
     wallBody->setPositionY(tempPos);
-    wallBody->setScale(scale);
+    wallBody->setScale(WALL_SCALE);
     this->addChild(wallBody);
-    tempPos = tempPos + bodySize.height*scale - 1;
+    tempPos = tempPos + bodySize.height*WALL_SCALE - 1;
     while(tempPos < size.height/2-offset){
         tempWallBody = Wall::cloneWall(wallBody,tempPos,0);
         this->addChild(tempWallBody);
-        tempPos += bodySize.height*scale - 1;
+        tempPos += bodySize.height*WALL_SCALE - 1;
     }
 
     //绘画下部分的墙体
 
     tempPos = - 100.0;
-    printf("临时位置：%f\n",tempPos);
+    // printf("临时位置：%f\n",tempPos);
     tempWallHead = Wall::cloneWall(wallHead,tempPos,1);
-    printf("下部分头部位置--X：：%f--Y：：%f\n",tempWallHead->getPosition().x,tempWallHead->getPosition().y);
+    // printf("下部分头部位置--X：：%f--Y：：%f\n",tempWallHead->getPosition().x,tempWallHead->getPosition().y);
     this->addChild(tempWallHead);
-    tempPos -= headSize.height*scale;
+    tempPos -= headSize.height*WALL_SCALE;
     tempWallBody = Wall::cloneWall(wallBody,tempPos,1);
     this->addChild(tempWallBody);
-    tempPos -= bodySize.height*scale - 1;
+    tempPos -= bodySize.height*WALL_SCALE - 1;
     while(tempPos > -size.height/2-offset){
         tempWallBody = Wall::cloneWall(wallBody,tempPos,1);
         this->addChild(tempWallBody);
-        tempPos -= bodySize.height*scale - 1;
+        tempPos -= bodySize.height*WALL_SCALE - 1;
     }
 };
 
@@ -73,13 +76,43 @@ Sprite* Wall::cloneWall(Sprite* wall,float posY,int direction){
     Sprite* tempWall = Sprite::createWithSpriteFrame(wall->getSpriteFrame());
     //根据墙的位置来决定锚点的位置。上部分的墙锚点为0，下部分的墙锚点为1.方便定位。
     tempWall->setAnchorPoint(Vec2(0.5,direction));
-    tempWall->setScale(scale);
+    tempWall->setScale(WALL_SCALE);
     tempWall->setPositionY(posY);
     return tempWall;
 }
 
+float Wall::getRandomOffset(){
+    Size size = Director::getInstance()->getWinSize(); 
+    srand ((unsigned)time(nullptr));
+    int sign = rand() % 2 + 1;
+    int num = rand() % 100 + 1;
+    num = sign == 1 ? num : -num;
+    float offset = abs(lastOffset + num);
+    while(offset > size.height*2/3){
+        sign = rand() % 2 + 1;
+        num = rand() % 100 + 1;
+        num = sign == 1 ? num : -num;
+        offset = abs(lastOffset + num);
+    }
+    return lastOffset + num;
+}
+
 void Wall::setWallPositionX(float x){
     this->setPositionX(x);
+}
+
+void Wall::setWallLeftPositionX(float x){
+    this->setPositionX(x+this->wallWidth/2);
+}
+
+float Wall::getWallLeftPositionX(){
+    float p = this->getPositionX() - this->wallWidth/2;
+    return p;
+}
+
+float Wall::getWallRightPositionX(){
+    float p = this->getPositionX() + this->wallWidth/2;
+    return p;
 }
 
 void Wall::deleteWall(){

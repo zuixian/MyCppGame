@@ -11,20 +11,27 @@
 
 USING_NS_CC;
 
-int GameLayer::sprameCount = 240;
-
 bool GameLayer::init(){
     
     //初始化父类
     if(!Layer::init()){
         return false;
     }
-    
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    printf("visibleSize--->%f,%f\n",visibleSize.width,visibleSize.height);
-    printf("origin---->%f,%f\n",origin.x,origin.y);
+    this->wallTime = 0;
+
+    this->wallList = Vector<Wall*>();
+    // this->wallPool = Vector<Wall*>(MAX_WALL_COUNT);
+
+    for(int i = 0; i < MAX_WALL_COUNT; ++i){
+        Wall* wall = Wall::create();
+        this->addChild(wall);
+        this->wallPool.push(wall);
+    }
+
+    this->bgSpeed = (VISIBLE_SIZE.width)/SPRAMECOUNT;
+
+    printf("visibleSize--->%f,%f\n",VISIBLE_SIZE.width,VISIBLE_SIZE.height);
 
     
     auto closeItem = MenuItemImage::create(
@@ -32,8 +39,8 @@ bool GameLayer::init(){
                                            "CloseSelected.png",
                                            CC_CALLBACK_1(GameLayer::menuCloseCallback, this));
     
-    float x = origin.x + visibleSize.width - closeItem->getContentSize().width/2;
-    float y = origin.y + closeItem->getContentSize().height/2;
+    float x = VISIBLE_SIZE.width - closeItem->getContentSize().width/2;
+    float y = closeItem->getContentSize().height/2;
     closeItem->setPosition(Vec2(x,y));
     
     // create menu, it's an autorelease object
@@ -43,20 +50,16 @@ bool GameLayer::init(){
     
     //添加背景图片
     auto bg = Sprite::create("bg.png");
-    bg->setContentSize(visibleSize);
+    bg->setContentSize(VISIBLE_SIZE);
     bg->setAnchorPoint(Vec2(0,0.5));
-    bg->setPosition(Vec2(0, visibleSize.height/2 + origin.y));
+    bg->setPosition(Vec2(0, VISIBLE_SIZE.height/2));
     this->addChild(bg, 0, 1);
 
     auto bg1 = Sprite::create("bg.png");
-    bg1->setContentSize(visibleSize);
+    bg1->setContentSize(VISIBLE_SIZE);
     bg1->setAnchorPoint(Vec2(0,0.5));
-    bg1->setPosition(Vec2(visibleSize.width + origin.x, visibleSize.height/2 + origin.y));
+    bg1->setPosition(Vec2(VISIBLE_SIZE.width, VISIBLE_SIZE.height/2));
     this->addChild(bg1, 0, 2);
-
-    bgSpeed = (visibleSize.width + origin.x)/sprameCount;
-
-    
 
     // auto testSprite = Sprite::create("bar1.png");
     // testSprite->setAnchorPoint(Vec2(0.5,1));
@@ -71,7 +74,7 @@ bool GameLayer::init(){
     //创建人物
     auto sprite = Hero::create("Hero.png");
     
-    sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+    sprite->setPosition(Vec2(VISIBLE_SIZE.width/2, VISIBLE_SIZE.height/2 ));
     
     this->addChild(sprite, 0, 0);
     
@@ -124,8 +127,6 @@ void GameLayer::onExit(){
 
 void GameLayer::heroMove(float dt){
     //TODO 将这两个变量变成全局变量
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     auto hero = dynamic_cast<Hero*>(this->getChildByTag(0));
     hero->keepMove();
@@ -133,33 +134,61 @@ void GameLayer::heroMove(float dt){
     auto bg = this->getChildByTag(1);
     auto bg1 = this->getChildByTag(2);
 
-    if(bg->getPositionX() <= -visibleSize.width - origin.x){
-        bg->setPositionX(visibleSize.width + origin.x);
+    if(bg->getPositionX() <= -VISIBLE_SIZE.width){
+        bg->setPositionX(VISIBLE_SIZE.width);
     }
-    if(bg1->getPositionX() <= -visibleSize.width - origin.x){
-        bg1->setPositionX(visibleSize.width + origin.x);
+    if(bg1->getPositionX() <= -VISIBLE_SIZE.width){
+        bg1->setPositionX(VISIBLE_SIZE.width);
     }
 
-    bg->setPositionX(bg->getPositionX() - bgSpeed);
-    bg1->setPositionX(bg1->getPositionX() - bgSpeed);
+    bg->setPositionX(bg->getPositionX() - this->bgSpeed);
+    bg1->setPositionX(bg1->getPositionX() - this->bgSpeed);
 }
 
 void GameLayer::wallMove(float dt){
+    this->wallTime++;
+    if(this->wallTime > 10){
+        this->wallTime = 0;
+        Wall* wall = NULL;
+        if(!this->wallPool.empty()){
+            wall = this->wallPool.top();
+            this->wallPool.pop();
+            wall->initWall();
+        }else{
+            wall = Wall::create();
+            wall->initWall();
+        }
+        wall->setWallLeftPositionX(VISIBLE_SIZE.width);
+        this->wallList.pushBack(wall);
+    }
     //创建墙体
     // auto wall = Wall::create();
     // wall->initWall(100);
-    // wall->setWallPositionX(visibleSize.width/2 + origin.x);
+    // 
     // this->addChild(wall);
+    if(!this->wallList.size()){
+        for(int i = 0; i < this->wallList.size(); ++i){
+            Wall* wall = this->wallList.at(i);
+            if(wall == NULL){
+                continue;
+            }
+            if(wall->getWallRightPositionX() < 0){
+                wall->deleteWall();
+                this->wallPool.push(wall);
+                this->wallList.erase(i);
+            }else{
+                wall->setWallPositionX(wall->getPositionX() - this->bgSpeed);
+            }
+        }
+    }
 }
 
 void GameLayer::checkOver(float dt){
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     auto hero = dynamic_cast<Hero*>(this->getChildByTag(0));
 
     //如果英雄触底，则游戏结束。
-    if(hero->getPositionY() <= (visibleSize.height + origin.y)/7){
+    if(hero->getPositionY() <= (VISIBLE_SIZE.height)/7){
         this->unschedule(schedule_selector(GameLayer::heroMove));
     }
 }

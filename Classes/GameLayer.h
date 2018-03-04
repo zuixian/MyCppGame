@@ -6,18 +6,29 @@
 //
 
 #include "cocos2d.h"
+#include "WallSprite.h"
+#include <stack>
 
 #ifndef GameLayer_h
 #define GameLayer_h
+
+#define MAX_WALL_COUNT 10
+#define SPRAMECOUNT 240
+#define VISIBLE_SIZE Director::getInstance()->getVisibleSize()
 
 class GameLayer : public cocos2d::Layer {
 
 private:
     float bgSpeed;
+
+    int wallTime;
+
+    // std::stack<Wall*> wallList;
+    std::stack<Wall*> wallPool;
+    cocos2d::Vector<Wall*> wallList;
+    // cocos2d::Vector<Wall*> wallPool;
     
 public:
-
-    static int sprameCount;
 
     virtual bool init();
     
