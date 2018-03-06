@@ -37,7 +37,7 @@ void Wall::initWall(){
     wallBody->setAnchorPoint(Vec2(0.5,0));
 
     //上下墙的空隙为 50
-    float tempPos = 100.0;
+    float tempPos = 120.0;
     wallHead->setPositionY(tempPos);
     //翻转图片
     wallHead->setScale(WALL_SCALE,-WALL_SCALE);
@@ -55,7 +55,7 @@ void Wall::initWall(){
 
     //绘画下部分的墙体
 
-    tempPos = - 100.0;
+    tempPos = - 120.0;
     // printf("临时位置：%f\n",tempPos);
     tempWallHead = Wall::cloneWall(wallHead,tempPos,1);
     // printf("下部分头部位置--X：：%f--Y：：%f\n",tempWallHead->getPosition().x,tempWallHead->getPosition().y);

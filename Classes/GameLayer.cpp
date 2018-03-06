@@ -23,11 +23,7 @@ bool GameLayer::init(){
     this->wallList = Vector<Wall*>();
     // this->wallPool = Vector<Wall*>(MAX_WALL_COUNT);
 
-    for(int i = 0; i < MAX_WALL_COUNT; ++i){
-        Wall* wall = Wall::create();
-        this->addChild(wall);
-        this->wallPool.push(wall);
-    }
+    
 
     this->bgSpeed = (VISIBLE_SIZE.width)/SPRAMECOUNT;
 
@@ -60,6 +56,12 @@ bool GameLayer::init(){
     bg1->setAnchorPoint(Vec2(0,0.5));
     bg1->setPosition(Vec2(VISIBLE_SIZE.width, VISIBLE_SIZE.height/2));
     this->addChild(bg1, 0, 2);
+
+    for(int i = 0; i < MAX_WALL_COUNT; ++i){
+        Wall* wall = Wall::create();
+        this->addChild(wall);
+        this->wallPool.push(wall);
+    }
 
     // auto testSprite = Sprite::create("bar1.png");
     // testSprite->setAnchorPoint(Vec2(0.5,1));
@@ -147,7 +149,7 @@ void GameLayer::heroMove(float dt){
 
 void GameLayer::wallMove(float dt){
     this->wallTime++;
-    if(this->wallTime > 10){
+    if(this->wallTime > 70){
         this->wallTime = 0;
         Wall* wall = NULL;
         if(!this->wallPool.empty()){
@@ -166,7 +168,7 @@ void GameLayer::wallMove(float dt){
     // wall->initWall(100);
     // 
     // this->addChild(wall);
-    if(!this->wallList.size()){
+    if(this->wallList.size() != 0 ){
         for(int i = 0; i < this->wallList.size(); ++i){
             Wall* wall = this->wallList.at(i);
             if(wall == NULL){
