@@ -13,6 +13,9 @@ float Wall::lastOffset = 0;
 
 void Wall::initWall(){
 
+    this->tRect = new cocos2d::Rect();
+    this->bRect = new cocos2d::Rect();
+
     float offset = Wall::getRandomOffset();
 
     Size size = Director::getInstance()->getWinSize();  
@@ -36,7 +39,10 @@ void Wall::initWall(){
     wallHead->setAnchorPoint(Vec2(0.5,0));
     wallBody->setAnchorPoint(Vec2(0.5,0));
 
-    //上下墙的空隙为 50
+    this->wallTopMinY = size.height/2+offset + 120;
+    this->wallBottomMaxY = size.height/2+offset - 120;
+
+    //上下墙的空隙为 240
     float tempPos = 120.0;
     wallHead->setPositionY(tempPos);
     //翻转图片
@@ -113,6 +119,32 @@ float Wall::getWallLeftPositionX(){
 float Wall::getWallRightPositionX(){
     float p = this->getPositionX() + this->wallWidth/2;
     return p;
+}
+
+cocos2d::Rect* Wall::getWallTopRect(){
+
+    Size size = Director::getInstance()->getWinSize();  
+
+    float tMinX = Wall::getWallLeftPositionX();
+    float tMinY = this->wallTopMinY;
+    float width = this->wallWidth;
+    float height = size.height - tMinY;
+
+    this->tRect->setRect(tMinX,tMinY,width,height);
+
+    return this->tRect;
+}
+
+cocos2d::Rect* Wall::getWallBottomRect(){
+
+    float tMinX = Wall::getWallLeftPositionX();
+    float tMinY = 0;
+    float width = this->wallWidth;
+    float height = this->wallBottomMaxY;
+
+    this->tRect->setRect(tMinX,tMinY,width,height);
+
+    return this->bRect;
 }
 
 void Wall::deleteWall(){

@@ -16,6 +16,7 @@ private:
     float initialSpeed = 0;
     float speed = 0;
     int spCount = 0;
+    cocos2d::Rect* rect;
     
 public:
     
@@ -27,7 +28,7 @@ public:
     void keepMove();
     
     void setInitialSpeed(float s);
-    
+
     CREATE_FUNC(Hero);
 };
 

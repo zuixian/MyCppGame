@@ -14,7 +14,6 @@ int Hero::hitSpeed = 5;
 
 Hero* Hero::create(const std::string &filename){
     Hero* hero = new Hero();
-    
     if(hero && hero->initWithFile(filename)){
         hero->autorelease();
         return hero;

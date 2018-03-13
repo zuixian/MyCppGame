@@ -42,6 +42,8 @@ public:
     void heroMove(float dt);
     void wallMove(float dt);
     void checkOver(float dt);
+
+    bool isHeroAndWall(Wall* wall,Hero* hero);
     
     CREATE_FUNC(GameLayer);
 };

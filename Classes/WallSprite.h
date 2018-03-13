@@ -15,6 +15,14 @@ private:
 
     float wallWidth;
 
+    float wallTopMinY;
+
+    float wallBottomMaxY;
+    
+    cocos2d::Rect* tRect;
+
+    cocos2d::Rect* bRect;
+
     Sprite* cloneWall(Sprite* wall,float posY,int direction);
 
 public:
@@ -33,6 +41,10 @@ public:
     float getWallLeftPositionX();
 
     float getWallRightPositionX();
+
+    cocos2d::Rect* getWallTopRect();
+
+    cocos2d::Rect* getWallBottomRect();
 
     void deleteWall();
 

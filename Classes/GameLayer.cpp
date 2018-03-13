@@ -128,8 +128,6 @@ void GameLayer::onExit(){
 }
 
 void GameLayer::heroMove(float dt){
-    //TODO 将这两个变量变成全局变量
-
     auto hero = dynamic_cast<Hero*>(this->getChildByTag(0));
     hero->keepMove();
 
@@ -188,11 +186,29 @@ void GameLayer::wallMove(float dt){
 void GameLayer::checkOver(float dt){
 
     auto hero = dynamic_cast<Hero*>(this->getChildByTag(0));
+    
+    bool isOver = false;
+    for(int i = 0; i < this->wallList.size(); ++i){
+        Wall* wall = this->wallList.at(i);
+        isOver = GameLayer::isHeroAndWall(wall,hero);
+        if(isOver) break;
+    }
 
     //如果英雄触底，则游戏结束。
-    if(hero->getPositionY() <= (VISIBLE_SIZE.height)/7){
+    if(hero->getPositionY() <= (VISIBLE_SIZE.height)/7 || isOver){
         this->unschedule(schedule_selector(GameLayer::heroMove));
+        this->unschedule(schedule_selector(GameLayer::wallMove));
+        this->unschedule(schedule_selector(GameLayer::checkOver));
     }
+}
+
+bool GameLayer::isHeroAndWall(Wall* wall,Hero* hero){
+    bool result = false;
+    float wlx = wall->getWallLeftPositionX();
+    float wrx = wall->getWallRightPositionX();
+    float wty = wall->getPositionY() + 120;
+    float wby = wall->getPositionY() - 120;
+    return result;
 }
 
 void GameLayer::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event){
