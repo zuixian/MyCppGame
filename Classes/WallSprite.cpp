@@ -29,7 +29,8 @@ void Wall::initWall(){
     Size headSize = wallHead->getContentSize();
     Size bodySize = wallBody->getContentSize();
 
-    this->wallWidth = headSize.width;
+    this->wallWidth = headSize.width*WALL_SCALE;
+    this->wallHeight = headSize.height*WALL_SCALE;
 
     Sprite *tempWallBody = NULL;
     Sprite *tempWallHead = NULL;
@@ -43,7 +44,7 @@ void Wall::initWall(){
     this->wallBottomMaxY = size.height/2+offset - 120;
 
     //上下墙的空隙为 240
-    float tempPos = 120.0;
+    float tempPos = headSize.height*WALL_SCALE + 90;
     wallHead->setPositionY(tempPos);
     //翻转图片
     wallHead->setScale(WALL_SCALE,-WALL_SCALE);
@@ -61,7 +62,7 @@ void Wall::initWall(){
 
     //绘画下部分的墙体
 
-    tempPos = - 120.0;
+    tempPos = - 90;
     // printf("临时位置：%f\n",tempPos);
     tempWallHead = Wall::cloneWall(wallHead,tempPos,1);
     // printf("下部分头部位置--X：：%f--Y：：%f\n",tempWallHead->getPosition().x,tempWallHead->getPosition().y);
@@ -112,40 +113,21 @@ void Wall::setWallLeftPositionX(float x){
 }
 
 float Wall::getWallLeftPositionX(){
-    float p = this->getPositionX() - this->wallWidth/2;
-    return p;
+    return this->getPositionX() - this->wallWidth/2;
 }
 
 float Wall::getWallRightPositionX(){
-    float p = this->getPositionX() + this->wallWidth/2;
-    return p;
+    return this->getPositionX() + this->wallWidth/2;
 }
 
-cocos2d::Rect* Wall::getWallTopRect(){
-
-    Size size = Director::getInstance()->getWinSize();  
-
-    float tMinX = Wall::getWallLeftPositionX();
-    float tMinY = this->wallTopMinY;
-    float width = this->wallWidth;
-    float height = size.height - tMinY;
-
-    this->tRect->setRect(tMinX,tMinY,width,height);
-
-    return this->tRect;
+float Wall::getWallTopPositionY(){
+    return this->getPositionY() + 90;
 }
 
-cocos2d::Rect* Wall::getWallBottomRect(){
-
-    float tMinX = Wall::getWallLeftPositionX();
-    float tMinY = 0;
-    float width = this->wallWidth;
-    float height = this->wallBottomMaxY;
-
-    this->tRect->setRect(tMinX,tMinY,width,height);
-
-    return this->bRect;
+float Wall::getWallBottomPositionY(){
+    return this->getPositionY() - 90;
 }
+
 
 void Wall::deleteWall(){
     this->removeAllChildren();

@@ -161,11 +161,6 @@ void GameLayer::wallMove(float dt){
         wall->setWallLeftPositionX(VISIBLE_SIZE.width);
         this->wallList.pushBack(wall);
     }
-    //创建墙体
-    // auto wall = Wall::create();
-    // wall->initWall(100);
-    // 
-    // this->addChild(wall);
     if(this->wallList.size() != 0 ){
         for(int i = 0; i < this->wallList.size(); ++i){
             Wall* wall = this->wallList.at(i);
@@ -190,7 +185,9 @@ void GameLayer::checkOver(float dt){
     bool isOver = false;
     for(int i = 0; i < this->wallList.size(); ++i){
         Wall* wall = this->wallList.at(i);
-        isOver = GameLayer::isHeroAndWall(wall,hero);
+        if(wall->getWallLeftPositionX() < hero->getPositionX() + hero->getContentSize().width/2
+        && wall->getWallRightPositionX() > hero->getPositionX() - hero->getContentSize().width/2)
+            isOver = GameLayer::isHeroAndWall(wall,hero);
         if(isOver) break;
     }
 
@@ -204,10 +201,12 @@ void GameLayer::checkOver(float dt){
 
 bool GameLayer::isHeroAndWall(Wall* wall,Hero* hero){
     bool result = false;
-    float wlx = wall->getWallLeftPositionX();
-    float wrx = wall->getWallRightPositionX();
-    float wty = wall->getPositionY() + 120;
-    float wby = wall->getPositionY() - 120;
+    float wty = wall->getWallTopPositionY();
+    float wby = wall->getWallBottomPositionY();
+    float hty = hero->getPositionY() + hero->getContentSize().height/2 - 2;
+    float hby = hero->getPositionY() - hero->getContentSize().height/2 + 2;
+    if(hty > wty || hby < wby)
+        result = true;
     return result;
 }
 

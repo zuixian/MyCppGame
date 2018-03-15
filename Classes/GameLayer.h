@@ -7,6 +7,7 @@
 
 #include "cocos2d.h"
 #include "WallSprite.h"
+#include "Hero.h"
 #include <stack>
 
 #ifndef GameLayer_h

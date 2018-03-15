@@ -15,6 +15,8 @@ private:
 
     float wallWidth;
 
+    float wallHeight;
+
     float wallTopMinY;
 
     float wallBottomMaxY;
@@ -42,9 +44,9 @@ public:
 
     float getWallRightPositionX();
 
-    cocos2d::Rect* getWallTopRect();
-
-    cocos2d::Rect* getWallBottomRect();
+    float getWallTopPositionY();
+    
+    float getWallBottomPositionY();
 
     void deleteWall();
 
