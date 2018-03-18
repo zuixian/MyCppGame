@@ -21,24 +21,27 @@ class GameLayer : public cocos2d::Layer {
 
 private:
     float bgSpeed;
-
     int wallTime;
 
-    // std::stack<Wall*> wallList;
     std::stack<Wall*> wallPool;
     cocos2d::Vector<Wall*> wallList;
-    // cocos2d::Vector<Wall*> wallPool;
-    
+
+    cocos2d::EventListenerKeyboard *listener;
+    cocos2d::MenuItemImage *restartItem;
+
 public:
 
     virtual bool init();
     
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
+    void menuRestartCallback(cocos2d::Ref* pSender);
     virtual void onTouchEnded(cocos2d::Touch* touch,cocos2d::Event* event);
     
     virtual void onEnter();
     virtual void onExit();
+
+    void reset();
     
     void heroMove(float dt);
     void wallMove(float dt);

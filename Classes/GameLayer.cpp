@@ -21,9 +21,6 @@ bool GameLayer::init(){
     this->wallTime = 0;
 
     this->wallList = Vector<Wall*>();
-    // this->wallPool = Vector<Wall*>(MAX_WALL_COUNT);
-
-    
 
     this->bgSpeed = (VISIBLE_SIZE.width)/SPRAMECOUNT;
 
@@ -39,8 +36,15 @@ bool GameLayer::init(){
     float y = closeItem->getContentSize().height/2;
     closeItem->setPosition(Vec2(x,y));
     
+    restartItem = MenuItemImage::create("51.png","51.png",
+                                        CC_CALLBACK_1(GameLayer::menuRestartCallback, this));
+    restartItem->setPosition(Vec2(VISIBLE_SIZE.width/2,VISIBLE_SIZE.height/2));
+    restartItem->setScale(0.1);
+    restartItem->setVisible(false);
+    restartItem->setEnabled(false);
+
     // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, NULL);
+    auto menu = Menu::create(closeItem,restartItem, NULL);
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
     
@@ -63,21 +67,9 @@ bool GameLayer::init(){
         this->wallPool.push(wall);
     }
 
-    // auto testSprite = Sprite::create("bar1.png");
-    // testSprite->setAnchorPoint(Vec2(0.5,1));
-    // testSprite->setScale(0.2);
-    // testSprite->setPosition(Vec2(visibleSize.width/2,visibleSize.height/2));
-    // testSprite->setAnchorPoint(Vec2(0.5,0));
-    // this->addChild(testSprite);
-    
-
-    // printf("墙体节点的坐标---X：：%f---Y：：%f\n",wall->getPositionX(),wall->getPositionY());
-    
     //创建人物
     auto sprite = Hero::create("Hero.png");
-    
     sprite->setPosition(Vec2(VISIBLE_SIZE.width/2, VISIBLE_SIZE.height/2 ));
-    
     this->addChild(sprite, 0, 0);
     
     this->schedule(schedule_selector(GameLayer::heroMove));
@@ -87,11 +79,62 @@ bool GameLayer::init(){
     return true;
 }
 
+void GameLayer::reset(){
+    //背景图片重置
+    auto bg = this->getChildByTag(1);
+    auto bg1 = this->getChildByTag(2);
+
+    bg->setPosition(Vec2(0, VISIBLE_SIZE.height/2));
+    bg1->setPosition(Vec2(VISIBLE_SIZE.width, VISIBLE_SIZE.height/2));
+
+    //墙体重置
+    if(this->wallList.size() != 0 ){
+        for(int i = 0; i < this->wallList.size(); ++i){
+            Wall* wall = this->wallList.at(i);
+            if(wall == NULL){
+                continue;
+            }
+            wall->deleteWall();
+            wall->removeFromParent();
+            this->wallList.erase(i);
+        }
+    }
+
+    for(int i = 0; i < this->wallPool.size(); ++i){
+        auto wall = this->wallPool.top();
+        this->wallPool.pop();
+        wall->removeFromParent();
+    }
+
+    for(int i = 0; i < MAX_WALL_COUNT; ++i){
+        Wall* wall = Wall::create();
+        this->addChild(wall);
+        this->wallPool.push(wall);
+    }
+
+    //人物重置
+    auto hero = static_cast<Hero *>(getChildByTag(0));
+    hero->setPosition(Vec2(VISIBLE_SIZE.width/2, VISIBLE_SIZE.height/2 ));
+    hero->setInitialSpeed(0);
+
+    //激活键盘事件
+    listener->setEnabled(true);
+
+    //将开始按钮隐藏
+    restartItem->setEnabled(false);
+    restartItem->setVisible(false);
+
+    //启动游戏循环
+    this->schedule(schedule_selector(GameLayer::heroMove));
+    this->schedule(schedule_selector(GameLayer::wallMove));
+    this->schedule(schedule_selector(GameLayer::checkOver));
+}
+
 void GameLayer::onEnter(){
     Layer::onEnter();
     printf("GameLayer onEnter");
     
-    auto listener = EventListenerKeyboard::create();
+    listener = EventListenerKeyboard::create();
     
     auto hero = getChildByTag(0);
     
@@ -116,7 +159,6 @@ void GameLayer::onEnter(){
                 break;
         }
     };
-    
     EventDispatcher* eventDispatcher = Director::getInstance()->getEventDispatcher();
     eventDispatcher->addEventListenerWithSceneGraphPriority(listener, hero);
 }
@@ -196,6 +238,9 @@ void GameLayer::checkOver(float dt){
         this->unschedule(schedule_selector(GameLayer::heroMove));
         this->unschedule(schedule_selector(GameLayer::wallMove));
         this->unschedule(schedule_selector(GameLayer::checkOver));
+        listener->setEnabled(false);
+        restartItem->setVisible(true);
+        restartItem->setEnabled(true);
     }
 }
 
@@ -212,6 +257,11 @@ bool GameLayer::isHeroAndWall(Wall* wall,Hero* hero){
 
 void GameLayer::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event){
     printf("onTouchEnded");
+}
+
+void GameLayer::menuRestartCallback(Ref* pSender)
+{
+    GameLayer::reset();
 }
 
 void GameLayer::menuCloseCallback(Ref* pSender)

@@ -39,6 +39,8 @@
 		4EDA25561FEA8A4A00985443 /* Hero.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EDA25541FEA8A4A00985443 /* Hero.cpp */; };
 		4EDDE98F1FE6A56600C250F3 /* GameLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EDDE98E1FE6A56600C250F3 /* GameLayer.cpp */; };
 		4EDDE9901FE6A56600C250F3 /* GameLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EDDE98E1FE6A56600C250F3 /* GameLayer.cpp */; };
+		4EFA8BF8205E41770084D145 /* 51.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EFA8BF7205E41770084D145 /* 51.png */; };
+		4EFA8BF9205E419C0084D145 /* 51.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EFA8BF7205E41770084D145 /* 51.png */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10017EB989F00D1A890 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FB17EB989F00D1A890 /* AppController.mm */; };
 		503AE10117EB989F00D1A890 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FC17EB989F00D1A890 /* main.m */; };
@@ -150,6 +152,7 @@
 		4EDA25541FEA8A4A00985443 /* Hero.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Hero.cpp; sourceTree = "<group>"; };
 		4EDA25581FEA8A6100985443 /* Hero.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hero.h; sourceTree = "<group>"; };
 		4EDDE98E1FE6A56600C250F3 /* GameLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameLayer.cpp; sourceTree = "<group>"; };
+		4EFA8BF7205E41770084D145 /* 51.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 51.png; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE0FA17EB989F00D1A890 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ios/AppController.h; sourceTree = SOURCE_ROOT; };
@@ -322,6 +325,7 @@
 			children = (
 				4ECA29211FE679E70023872A /* Hero.png */,
 				4ECA29191FE6761A0023872A /* bar1.png */,
+				4EFA8BF7205E41770084D145 /* 51.png */,
 				4ECA29141FE676190023872A /* bar2.png */,
 				4ECA291A1FE6761A0023872A /* bg.png */,
 				521A8EA819F11F5000D177D7 /* fonts */,
@@ -516,6 +520,7 @@
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
+				4EFA8BF8205E41770084D145 /* 51.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
@@ -542,6 +547,7 @@
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
 				3EACC99019EE6D4300EB3C5E /* res in Resources */,
 				521A8EAA19F11F5000D177D7 /* fonts in Resources */,
+				4EFA8BF9205E419C0084D145 /* 51.png in Resources */,
 				4ED21F061FE7EB8800FAE33C /* Hero.png in Resources */,
 				46880B7C19C43A67006E1F66 /* CloseNormal.png in Resources */,
 				46880B7E19C43A67006E1F66 /* CloseSelected.png in Resources */,
